@@ -186,9 +186,9 @@ Posters can mark their item as **Returned** once recovered. Resolved items are a
 
 | Name | Role |
 |---|---|
-| Seyanshu Mukherjee | Full-stack / Project Lead |
-| Shreemoyee Roy | Frontend / UI |
-| Garvit Dhuran | Backend / Firebase |
+| Seyanshu Mukherjee|
+| Shreemoyee Roy |
+| Garvit Dhuran |
 
 ---
 
