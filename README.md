@@ -155,10 +155,10 @@ REACT_APP_FIREBASE_APP_ID=
 
 ### Phase 5 — Future Scope 
 - [ ] AI-based smart matching between lost and found posts
-- [ ] In-app messaging / chat
-- [ ] Push notifications when a potential match is found
-- [ ] Report fake or spam claims
-- [ ] Campus-wide SSO / college email verification
+- [x] In-app messaging / chat
+- [x] Push notifications when a potential match is found
+- [x] Report fake or spam claims
+- [x] Campus-wide SSO / college email verification
 
 ---
 
