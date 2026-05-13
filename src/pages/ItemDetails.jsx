@@ -227,12 +227,13 @@ function ItemDetails() {
 
         <div className="flex gap-lg">
           <span className="text-sm text-light fw-500">
-            {item.location}
+            {item.location || 'Location unknown'}
           </span>
           <span className="text-sm text-light fw-500">
-            {item.date}
+            {item.date || 'Date unknown'}
           </span>
         </div>
+
       </div>
 
       <hr className="details-divider" />

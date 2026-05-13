@@ -37,6 +37,7 @@ function PostItem() {
   const [location, setLocation] = useState('')
   const [locationDetail, setLocationDetail] = useState('')
 
+
   const [date, setDate] = useState('')
 
   const [image, setImage] = useState(null)
@@ -81,6 +82,7 @@ function PostItem() {
     const errors = {}
 
     if (!title.trim()) {
+
       errors.title = 'Item name is required.'
     } else if (title.trim().length < 3) {
       errors.title = 'Minimum 3 characters.'
@@ -96,15 +98,17 @@ function PostItem() {
       errors.category = 'Select a category.'
     }
 
-    if (!location) {
+    if (date && date > today) {
+      errors.date = 'Date cannot be in the future.'
+    }
+
+    // locationDetail is optional; only validate if user typed a specific detail
+    if (!location && locationDetail.trim()) {
       errors.location = 'Select a location.'
     }
 
-    if (!date) {
-      errors.date = 'Date is required.'
-    } else if (date > today) {
-      errors.date = 'Future date not allowed.'
-    }
+
+
 
     if (
       image &&
@@ -186,9 +190,12 @@ function PostItem() {
         imageUrl = await uploadImage(image)
       }
 
-      const fullLocation = locationDetail.trim()
-        ? `${location} — ${locationDetail.trim()}`
-        : location
+      const fullLocation =
+        locationDetail.trim() && location
+          ? `${location} — ${locationDetail.trim()}`
+          : location || 'Location unknown'
+
+      const itemDate = date || 'Date unknown'
 
       await addDoc(collection(db, 'items'), {
         type,
@@ -196,7 +203,8 @@ function PostItem() {
         description: description.trim(),
         category,
         location: fullLocation,
-        date,
+        date: itemDate,
+
         imageUrl,
         status: 'active',
         postedBy: auth.currentUser.uid,
@@ -366,36 +374,36 @@ function PostItem() {
 
           <div className="flex-1">
 
-            <label className="form-label">
-              Date
-            </label>
+            <div>
+              <label className="form-label" style={{ fontSize: '0.78rem', color: '#aaa', marginBottom: '0.3rem', display: 'block' }}>
+                Date lost/found <span style={{ color: '#bbb' }}>(optional — leave blank if unsure)</span>
+              </label>
+              <input
+                type="date"
+                max={today}
+                value={date}
+                onChange={e => setDate(e.target.value)}
+                className={`input-field ${
+                  fieldErrors.date
+                    ? 'input-error'
+                    : ''
+                }`}
+              />
+              <FieldError msg={fieldErrors.date} />
+            </div>
 
-            <input
-              type="date"
-              max={today}
-              value={date}
-              onChange={e =>
-                setDate(e.target.value)
-              }
-              className={`input-field ${
-                fieldErrors.date
-                  ? 'input-error'
-                  : ''
-              }`}
-            />
-
-            <FieldError msg={fieldErrors.date} />
 
           </div>
 
         </div>
 
-        {/* Location */}
-        <div>
+          {/* Location */}
+          <div>
 
-          <label className="form-label">
+          <label className="form-label" style={{ fontSize: '0.95rem' }}>
             Location
           </label>
+
 
           <div className="flex flex-col gap-xs">
 
@@ -412,8 +420,9 @@ function PostItem() {
             >
 
               <option value="">
-                Select location
+                Not sure / Unknown location
               </option>
+
 
               {LOCATIONS.map(location => (
                 <option
@@ -443,6 +452,7 @@ function PostItem() {
           <FieldError msg={fieldErrors.location} />
 
         </div>
+
 
         {/* Image */}
         <div>

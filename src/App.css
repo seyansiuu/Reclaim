@@ -105,14 +105,23 @@
 
 .item-card {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  gap: 1rem;
   padding: 1.25rem;
   background: var(--bg-white);
   border: 1px solid var(--border);
+  border-left: 3px solid transparent;
   border-radius: var(--radius-md);
   text-decoration: none;
   color: inherit;
+}
+
+.browse-card-lost:hover {
+  border-left-color: #7C3AED;
+}
+
+.browse-card-found:hover {
+  border-left-color: #059669;
 }
 
 .item-card-content {
@@ -128,6 +137,14 @@
   flex-wrap: wrap;
 }
 
+.item-card-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
 .item-card-title {
   font-weight: 600;
   font-size: 1.05rem;
@@ -136,6 +153,10 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.item-card-meta {
+  margin: 0.25rem 0 0.55rem;
 }
 
 .item-card-desc {
@@ -187,12 +208,15 @@
   border-radius: var(--radius-md);
   padding: 1rem;
   text-align: center;
+  background: #fff;
+  border: 1px solid var(--border);
 }
 
 .profile-stat-val {
   font-size: 1.6rem;
   font-weight: 700;
   margin: 0;
+  color: #7C3AED;
 }
 
 .profile-stat-lbl {
@@ -222,6 +246,14 @@
   font-weight: 600;
   font-size: 1.05rem;
   margin: 0;
+}
+
+.stat-active-text {
+  color: #d97706;
+}
+
+.stat-resolved-text {
+  color: #059669;
 }
 
 /* Item Details */

@@ -372,6 +372,7 @@ function Profile() {
   const myLost = items.filter(item => item.type === 'lost')
   const totalActive = items.filter(item => item.status === 'active').length
   const totalResolved = items.length - totalActive
+  const firstName = user?.displayName?.split(' ')[0] || user?.email?.split('@')[0]
 
   if (loading) {
     return (
@@ -396,9 +397,15 @@ function Profile() {
 
   return (
     <div className="container-sm">
+      <div style={{
+        height: '3px',
+        background: 'linear-gradient(90deg, #7C3AED, #059669)',
+        borderRadius: '999px',
+        marginBottom: '1.5rem',
+      }} />
       <div className="mb-4">
-        <h2 className="heading-lg mb-1">
-          My Profile
+        <h2 className="heading-lg mb-1" style={{ color: '#111', fontSize: 'clamp(2rem, 5vw, 2.7rem)' }}>
+          Hi, {firstName} 👋
         </h2>
         <p className="text-sm text-light fw-500">
           {user.email}
@@ -406,8 +413,8 @@ function Profile() {
       </div>
 
       <div className="profile-stats-container">
-        <div className="profile-stat-box">
-          <p className="profile-stat-val">
+        <div className="profile-stat-box" style={{ borderTop: 'none', borderColor: '#7C3AED' }} >
+          <p className="profile-stat-val" style={{ color: '#7C3AED' }}>
             {items.length}
           </p>
           <p className="profile-stat-lbl">
@@ -415,7 +422,7 @@ function Profile() {
           </p>
         </div>
         <div className="profile-stat-box stat-active">
-          <p className="profile-stat-val stat-active-text">
+          <p className="profile-stat-val stat-active-text" style={{ color: '#d97706' }}>
             {totalActive}
           </p>
           <p className="profile-stat-lbl">
@@ -423,7 +430,7 @@ function Profile() {
           </p>
         </div>
         <div className="profile-stat-box stat-resolved">
-          <p className="profile-stat-val stat-resolved-text">
+          <p className="profile-stat-val stat-resolved-text" style={{ color: '#059669' }}>
             {totalResolved}
           </p>
           <p className="profile-stat-lbl">

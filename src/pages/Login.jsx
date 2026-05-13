@@ -45,7 +45,12 @@ function Login() {
 
       await signInWithEmailLink(auth, emailToUse, window.location.href)
       localStorage.removeItem('emailForSignIn')
-      navigate('/')
+
+      if (!auth.currentUser?.displayName) {
+        navigate('/setup')
+      } else {
+        navigate('/')
+      }
     } catch (err) {
       setError(err?.message || 'Failed to sign in')
       setStep('form')
@@ -56,7 +61,11 @@ function Login() {
   useEffect(() => {
     const href = window.location.href
 
-    if (isSignInWithEmailLink(auth, href)) {
+    // Used only for isSignInWithEmailLink check
+    if (!isSignInWithEmailLink(auth, href)) return
+
+    // Avoid setting state synchronously inside the effect body
+    setTimeout(() => {
       setStep('completing')
       const savedEmail = localStorage.getItem('emailForSignIn')
 
@@ -64,7 +73,8 @@ function Login() {
         completeSignIn(savedEmail)
       }
       // if no saved email, user must manually enter it
-    }
+    }, 0)
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -136,7 +146,6 @@ function Login() {
 
   const handleResend = async () => {
     setError('')
-    const href = window.location.href
     const trimmedEmail = (email || '').trim()
 
     if (!trimmedEmail) {
@@ -317,4 +326,3 @@ function Login() {
 }
 
 export default Login
-

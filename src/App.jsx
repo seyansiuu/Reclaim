@@ -3,6 +3,8 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './firebase/config'
 import Navbar from './components/Navbar'
+import ScrollProgress from './components/ScrollProgress'
+import Footer from './components/Footer'
 import Home from './pages/Home'
 import Browse from './pages/Browse'
 import PostItem from './pages/PostItem'
@@ -10,6 +12,7 @@ import ItemDetails from './pages/ItemDetails'
 import Profile from './pages/Profile'
 import Chat from './pages/Chat'
 import Login from './pages/Login'
+import Setup from './pages/Setup'
 import './App.css'
 
 
@@ -36,6 +39,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ScrollProgress />
       <Navbar />
       <Routes>
         <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
@@ -44,10 +48,12 @@ function App() {
         <Route path="/chat/:chatRoomId" element={user ? <Chat /> : <Navigate to="/login" />} />
         <Route path="/post" element={user ? <PostItem /> : <Navigate to="/login" />} />
         <Route path="/profile" element={user ? <Profile /> : <Navigate to="/login" />} />
+        <Route path="/setup" element={user ? <Setup /> : <Navigate to="/login" />} />
         <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
 
 
       </Routes>
+      <Footer />
     </BrowserRouter>
   )
 }

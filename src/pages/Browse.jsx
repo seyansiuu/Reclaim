@@ -488,17 +488,49 @@ function Browse() {
               >
 
                 <div
-                  className={`item-card hoverable ${
+                  className={`item-card hoverable browse-card-${item.type} ${
                     item.status !== 'active'
                       ? 'resolved'
                       : ''
                   }`}
                 >
 
+                  {item.imageUrl ? (
+                    <img
+                      src={item.imageUrl}
+                      alt={item.title}
+                      style={{
+                        width: '60px',
+                        height: '60px',
+                        borderRadius: '8px',
+                        objectFit: 'cover',
+                        flex: '0 0 auto',
+                      }}
+                    />
+                  ) : (
+                    <div style={{
+                      width: '60px',
+                      height: '60px',
+                      borderRadius: '8px',
+                      background: '#F3F4F6',
+                      color: '#7C3AED',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontWeight: 800,
+                      fontSize: '1.1rem',
+                      flex: '0 0 auto',
+                    }}>
+                      {item.title?.charAt(0).toUpperCase()}
+                    </div>
+                  )}
+
                   <div className="item-card-content">
 
-                    {/* Badges */}
-                    <div className="item-card-badges">
+                    <div className="item-card-topline">
+                      <p className="item-card-title">
+                        {item.title}
+                      </p>
 
                       <span
                         className={`badge ${
@@ -511,6 +543,14 @@ function Browse() {
                           ? 'Lost'
                           : 'Found'}
                       </span>
+                    </div>
+
+                    <p className="text-xs text-light item-card-meta">
+                      {item.location || 'Location unknown'} · {item.date || 'Date unknown'}
+                    </p>
+
+
+                    <div className="item-card-badges">
 
                       {item.status !== 'active' && (
                         <span className="badge returned">
@@ -524,16 +564,7 @@ function Browse() {
                         </span>
                       )}
 
-                      <span className="text-xs text-light">
-                        {item.date}
-                      </span>
-
                     </div>
-
-                    {/* Title */}
-                    <p className="item-card-title">
-                      {item.title}
-                    </p>
 
                     {/* Description */}
                     {item.description && (
@@ -541,11 +572,6 @@ function Browse() {
                         {item.description}
                       </p>
                     )}
-
-                    {/* Location */}
-                    <p className="text-xs text-light flex align-center gap-xs">
-                      📍 {item.location}
-                    </p>
 
                   </div>
 
@@ -567,5 +593,6 @@ function Browse() {
     </div>
   )
 }
+
 
 export default Browse

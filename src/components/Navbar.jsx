@@ -7,6 +7,9 @@ import { auth, db } from '../firebase/config'
 function Navbar() {
   const navigate = useNavigate()
   const user = auth.currentUser
+  const firstName = user?.displayName?.split(' ')[0]
+    || user?.email?.split('@')[0]?.split('.')[0]
+
   const [menuOpen, setMenuOpen] = useState(false)
   const [notificationOpen, setNotificationOpen] = useState(false)
   const [notifications, setNotifications] = useState([])
@@ -91,7 +94,17 @@ function Navbar() {
               onNotificationClick={handleNotificationClick}
               onDeleteNotification={handleDeleteNotification}
             />
-            <Link to="/profile" className="nav-link">Profile</Link>
+            <Link to="/profile" className="nav-link" style={{ ...navLink, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <span style={{
+                width: '28px', height: '28px', borderRadius: '50%',
+                background: 'linear-gradient(135deg, #7C3AED, #059669)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: '#fff', fontSize: '0.75rem', fontWeight: '700',
+              }}>
+                {firstName?.charAt(0).toUpperCase()}
+              </span>
+              Hi, {firstName}
+            </Link>
             <button onClick={handleLogout} className="btn-action neutral">Logout</button>
           </>
         ) : (
@@ -128,7 +141,27 @@ function Navbar() {
                 onNotificationClick={handleNotificationClick}
                 onDeleteNotification={handleDeleteNotification}
               />
-              <Link to="/profile" onClick={() => setMenuOpen(false)} className="nav-link">Profile</Link>
+              <Link
+                to="/profile"
+                onClick={() => setMenuOpen(false)}
+                className="nav-link"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  ...navLink,
+                }}
+              >
+                <span style={{
+                  width: '28px', height: '28px', borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #7C3AED, #059669)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: '#fff', fontSize: '0.75rem', fontWeight: '700',
+                }}>
+                  {firstName?.charAt(0).toUpperCase()}
+                </span>
+                Hi, {firstName}
+              </Link>
               <button onClick={handleLogout} className="btn-action neutral" style={{ textAlign: 'left' }}>Logout</button>
             </>
           ) : (
@@ -263,6 +296,12 @@ const bellBtn = {
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
+}
+
+const navLink = {
+  color: 'var(--text-muted)',
+  textDecoration: 'none',
+  fontWeight: '500',
 }
 
 const badge = {
